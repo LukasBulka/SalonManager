@@ -2,9 +2,12 @@
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
 <h1>Login form</h1>
 <form method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    Email :<br>
+    <input type="text" name="username"/><br>
+    Password:<br>
+    <input type="password" name="password"/> <br>
+    <br>
+    <input type="submit" value="Log In"/>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

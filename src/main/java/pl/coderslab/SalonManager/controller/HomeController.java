@@ -36,16 +36,12 @@ public class HomeController {
 
     @GetMapping("/register")
     public String register() {
-        return "registerForm";
+        return "redirect:/users/registration";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "loginForm";
-    }
-    @PostMapping("/login")
-    public String getLogin() {
-        return "/dashboard";
+        return "redirect:/users/login";
     }
 
     @GetMapping("/logout")
