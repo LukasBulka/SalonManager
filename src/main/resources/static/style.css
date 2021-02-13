@@ -1,3 +1,24 @@
+table {
+    border-collapse: collapse;
+    font-size: 24px;
+}
+
+tr, td, th {
+    border: 1px gray solid;
+    text-align: center;
+    vertical-align: middle;
+    padding: 6px;
+}
+
+th {
+    color: white;
+    background-color: darkgray;
+}
+
+td {
+    background-color: lightgray;
+}
+
 #signin, #login, #logout {
     float: right;
     margin-left: 10px;

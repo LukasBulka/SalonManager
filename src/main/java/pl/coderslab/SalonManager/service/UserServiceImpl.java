@@ -1,7 +1,6 @@
 package pl.coderslab.SalonManager.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +12,7 @@ import pl.coderslab.SalonManager.model.Role;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.repository.UserRepository;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +20,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private Set<GrantedAuthority> grantedAuthorities;
 
     @Override
     public User save(UserToRegisterDto userToRegisterDto) {
@@ -41,8 +39,12 @@ public class UserServiceImpl implements UserService{
         if (user == null) {
             throw new UsernameNotFoundException("User with email not found");
         }
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        grantedAuthorities = new HashSet<>();
         user.getRoles().forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getName())));
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
+    }
+
+    public Set<GrantedAuthority> getGrantedAuthorities() {
+        return grantedAuthorities;
     }
 }

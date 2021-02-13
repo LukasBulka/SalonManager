@@ -1,6 +1,5 @@
 package pl.coderslab.SalonManager;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +18,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
+
+    @Autowired
+    private SuccessLoginHandler successLoginHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -42,10 +47,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/js/**", "/css/**", "/img/**").permitAll()
-                .antMatchers("/dashboard").authenticated()
+                .antMatchers("/dashboard/dashboardDispatcher/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE", "ROLE_USER")
+                .antMatchers("/dashboard/**").authenticated()
+                .antMatchers("/dashboard/dashboardDispatcher/admin").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/dashboard/dashboardDispatcher/employee").hasAuthority("ROLE_EMPLOYEE")
+                .antMatchers("/dashboard/dashboardDispatcher/user").hasAuthority("ROLE_USER")
                 .and()
                 .formLogin()
-                .loginPage("/users/login").permitAll()
+                .loginPage("/authentication/login").permitAll()
+//                .successHandler(successLoginHandler)
+                .defaultSuccessUrl("/")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
