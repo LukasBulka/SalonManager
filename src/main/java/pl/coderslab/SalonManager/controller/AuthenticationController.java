@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.SalonManager.controller.dto.UserToRegisterDto;
-import pl.coderslab.SalonManager.service.UserService;
+import pl.coderslab.SalonManager.model.User;
+import pl.coderslab.SalonManager.repository.UserRepository;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/authentication")
 public class AuthenticationController {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
@@ -24,9 +25,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public String registerUser(@ModelAttribute("user")UserToRegisterDto userToRegisterDto) {
-        userService.save(userToRegisterDto);
-        return "redirect:/authentication/registration?success";
+    public String registerUser(@ModelAttribute("user") User user) {
+        userRepository.save(user);
+        return "redirect:/authentication/registration?success=true";
     }
 
     @GetMapping("/login")
@@ -36,6 +37,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public String login() {
-        return "redirect:/authentication/login?success";
+        return "redirect:/authentication/login?success=true";
     }
 }

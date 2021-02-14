@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
 <h1>Admin Panel</h1>
-<h3>User list</h3>
+<h3>Employees list</h3>
 <a href="<c:url value="/admin"/>">Go back</a>
 
 <table>
@@ -11,8 +11,6 @@
         <th>Last name</th>
         <th>Email</th>
         <th>Password</th>
-        <th>Roles</th>
-        <th>Permissions</th>
         <th>Active</th>
         <th>Action</th>
     </tr>
@@ -23,8 +21,6 @@
             <td>${user.lastName}</td>
             <td>${user.email}</td>
             <td>${user.password}</td>
-            <td>${user.roles}</td>
-            <td>${user.permissions}</td>
             <td>${user.active}</td>
             <td>
                 <ul>

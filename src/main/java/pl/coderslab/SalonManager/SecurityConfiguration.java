@@ -1,6 +1,5 @@
 package pl.coderslab.SalonManager;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,20 +9,23 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import pl.coderslab.SalonManager.service.UserService;
+import pl.coderslab.SalonManager.service.UserPrincipalDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private LoginSuccessHandler loginSuccessHandler;
+//
+//    @Autowired
+//    private SuccessLoginHandler successLoginHandler;
 
-    @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
+    private final UserPrincipalDetailsService userPrincipalDetailsService;
 
-    @Autowired
-    private SuccessLoginHandler successLoginHandler;
+    public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
+        this.userPrincipalDetailsService = userPrincipalDetailsService;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -33,13 +35,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(userPrincipalDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -47,11 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/js/**", "/css/**", "/img/**").permitAll()
-                .antMatchers("/dashboard/dashboardDispatcher/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE", "ROLE_USER")
-                .antMatchers("/dashboard/**").authenticated()
-                .antMatchers("/dashboard/dashboardDispatcher/admin").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/dashboard/dashboardDispatcher/employee").hasAuthority("ROLE_EMPLOYEE")
-                .antMatchers("/dashboard/dashboardDispatcher/user").hasAuthority("ROLE_USER")
+                .antMatchers("/userAccount/**").hasRole("USER")
+                .antMatchers("/administration/**").hasRole("ADMIN")
+                .antMatchers("/management/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .and()
                 .formLogin()
                 .loginPage("/authentication/login").permitAll()

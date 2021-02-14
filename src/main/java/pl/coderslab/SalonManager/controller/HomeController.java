@@ -24,8 +24,16 @@ public class HomeController {
     public String contact() { return "contact";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard() { return "redirect:/dashboardDispatcher";
+    @GetMapping("/userAccount")
+    public String userAccount() { return "userAccount";
+    }
+
+    @GetMapping("/administration")
+    public String administration() { return "redirect:/admin";
+    }
+
+    @GetMapping("/management")
+    public String management() { return "management";
     }
 
     @GetMapping("/register")
