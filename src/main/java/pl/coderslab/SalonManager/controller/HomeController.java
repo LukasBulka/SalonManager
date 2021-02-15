@@ -25,7 +25,7 @@ public class HomeController {
     }
 
     @GetMapping("/userAccount")
-    public String userAccount() { return "userAccount";
+    public String userAccount() { return "redirect:/user";
     }
 
     @GetMapping("/administration")

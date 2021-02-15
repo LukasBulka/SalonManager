@@ -31,7 +31,7 @@ public class User {
     private String password;
     private String roles = "";
     private String permissions = "";
-    private Integer active;
+    private Boolean active;
 
     public User(String firstName,
                 String lastName,
@@ -45,7 +45,7 @@ public class User {
         this.password = password;
         this.roles = roles;
         this.permissions = permissions;
-        this.active = 1;
+        this.active = true;
     }
 
     public List<String> getRolesList() {

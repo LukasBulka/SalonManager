@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.repository.UserRepository;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,8 +39,14 @@ public class AdminController {
 
     @GetMapping("/showEmployees")
     public String showEmployees(Model model) {
-        List<User> users = userRepository.findByRoles("ADMIN, EMPLOYEE");
-        model.addAttribute("users", users);
+        List<User> employees = new ArrayList<>();
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            if (user.getRolesList().contains("EMPLOYEE") || user.getRolesList().contains("ADMIN")) {
+                employees.add(user);
+            }
+        }
+        model.addAttribute("users", employees);
         return "showUsers";
     }
 }

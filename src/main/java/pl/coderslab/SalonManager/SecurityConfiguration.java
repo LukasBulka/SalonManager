@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import pl.coderslab.SalonManager.model.UserPrincipal;
 import pl.coderslab.SalonManager.service.UserPrincipalDetailsService;
 
 @Configuration
@@ -22,6 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //    private SuccessLoginHandler successLoginHandler;
 
     private final UserPrincipalDetailsService userPrincipalDetailsService;
+
 
     public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;

@@ -1,6 +1,7 @@
 package pl.coderslab.SalonManager.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.SalonManager.controller.dto.UserToRegisterDto;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.repository.UserRepository;
+import pl.coderslab.SalonManager.service.UserPrincipalDetailsService;
 
 @Controller
 @AllArgsConstructor
@@ -17,6 +19,7 @@ import pl.coderslab.SalonManager.repository.UserRepository;
 public class AuthenticationController {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
@@ -26,7 +29,12 @@ public class AuthenticationController {
 
     @PostMapping("/registration")
     public String registerUser(@ModelAttribute("user") User user) {
-        userRepository.save(user);
+        User userToSave = new User(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                passwordEncoder.encode(user.getPassword()), "USER", "");
+        userRepository.save(userToSave);
         return "redirect:/authentication/registration?success=true";
     }
 
