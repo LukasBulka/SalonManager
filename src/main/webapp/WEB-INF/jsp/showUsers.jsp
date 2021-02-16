@@ -1,8 +1,22 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
 <h1>Admin Panel</h1>
 <h3>User list</h3>
 <a href="<c:url value="/admin"/>">Go back</a>
+<br>
+<br>
+<form method="get" action="/admin/showFilteredUsers">
+    Select role to filter:<br>
+    <input type="checkbox" name="options" value="ADMIN">by Admin
+    <input type="checkbox" name="options" value="EMPLOYEE">by Employee
+    <input type="checkbox" name="options" value="USER">by User
+    <input type="submit" value="Search">
+</form>
+
+<br>
+<br>
 
 <table>
     <tr>

@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.SalonManager.controller.dto.UserToRegisterDto;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.repository.UserRepository;
-import pl.coderslab.SalonManager.service.UserPrincipalDetailsService;
 
 @Controller
 @AllArgsConstructor
@@ -23,7 +21,7 @@ public class AuthenticationController {
 
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserToRegisterDto());
+        model.addAttribute("user", new User());
         return "registrationForm";
     }
 
