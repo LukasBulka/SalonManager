@@ -6,14 +6,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.model.UserUpdater;
 import pl.coderslab.SalonManager.repository.MyServiceRepository;
 import pl.coderslab.SalonManager.repository.UserRepository;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @AllArgsConstructor
@@ -25,10 +24,14 @@ public class UserController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserUpdater userUpdater;
 
+    // display user panel
+
     @GetMapping
     public String showUserAccount() {
         return "userAccount";
     }
+
+    // User CRUD
 
     @GetMapping("/myProfile")
     public String showUserProfile(Model model) {
@@ -54,18 +57,41 @@ public class UserController {
         return "userAccount";
     }
 
+    @GetMapping("/confirmRemoveUserAccount")
+    public String confirmRemoveUserAccount() {
+        return "confirmRemoveUserAccount";
+    }
+
+    @GetMapping("/removeProfile")
+    public String removeAccount(HttpServletRequest request) {
+        User user = getUserWithEmail();
+        if (user != null) {
+            userRepository.deleteById(user.getId());
+            request.getSession().invalidate();
+        }
+        return "redirect:/?success=true";
+    }
+
+
+    // Services
+
     @GetMapping("/servicesList")
     public String showServicesList(Model model) {
         model.addAttribute("services", myServiceRepository.findAll());
         return "showServices";
     }
 
+    // Orders
+
     @GetMapping("/orderService")
     public String orderServiceForm() {
-        return "orderService";
+        return "orderServiceForm";
     }
 
 
+
+
+    // helping methods
 
     private String getUserWithEmail(Model model, String view) {
         String email = "";
