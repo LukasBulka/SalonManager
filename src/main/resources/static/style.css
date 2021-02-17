@@ -27,3 +27,20 @@ a {
     text-decoration: none;
     color: blue;
 }
+
+#choose {
+    color: blue;
+    text-align: center;
+}
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#confirm {
+    color: green;
+}
+#cancel {
+    color: red;
+    position: center;
+}

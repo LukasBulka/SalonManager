@@ -31,7 +31,9 @@ public class AuthenticationController {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                passwordEncoder.encode(user.getPassword()), "USER", "");
+                passwordEncoder.encode(user.getPassword()),
+                "USER",
+                "");
         userRepository.save(userToSave);
         return "redirect:/authentication/registration?success=true";
     }

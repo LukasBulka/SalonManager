@@ -16,17 +16,15 @@
 </form>
 
 <br>
+<a href="<c:url value="/admin/addUser"/>">Add new user</a><br>
 <br>
-
 <table>
     <tr>
         <th>Id</th>
         <th>First name</th>
         <th>Last name</th>
         <th>Email</th>
-        <th>Password</th>
         <th>Roles</th>
-        <th>Permissions</th>
         <th>Active</th>
         <th>Action</th>
     </tr>
@@ -36,16 +34,11 @@
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
             <td>${user.email}</td>
-            <td>${user.password}</td>
             <td>${user.roles}</td>
-            <td>${user.permissions}</td>
             <td>${user.active}</td>
             <td>
-                <ul>
-                    <li><a href="/admin/add">Add</a></li>
-                    <li><a href="/admin/update/${user.id}">Update</a></li>
-                    <li><a href="/admin/remove/${user.id}">Delete</a></li>
-                </ul>
+                <a href="/admin/updateUser/${user.id}">Update</a><br>
+                <a href="/admin/confirmRemoveUser/${user.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>

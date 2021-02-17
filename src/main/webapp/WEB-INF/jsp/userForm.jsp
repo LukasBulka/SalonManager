@@ -1,8 +1,8 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
-<h1>Add employee</h1>
-
-<form:form method="post" modelAttribute="employee">
+<h1>Add user</h1>
+<a href="<c:url value="/admin"/>">Go back</a>
+<form:form method="post" modelAttribute="user">
 
     First name:<br>
     <form:input path="firstName"/><br>
@@ -17,11 +17,11 @@
     <form:password path="password"/><br>
     <br>
     Role:<br>
-    <form:select path="roles" items="${roles}"/>
-<%--        <form:option value="-" label="--Select Role--"/>--%>
-<%--        <form:options items="${roles}"/>--%>
-<%--    </form:select><br>--%>
+    <form:checkboxes items="${roles}" path="roles" /><br>
     <br>
-    <input type="submit" value="Add employee"/>
-</form:form>
+    Active:<br>
+    <form:radiobuttons items="${active}" path="active" /><br>
+    <input type="submit" value="Add user"/>
+</form:form><br>
+
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

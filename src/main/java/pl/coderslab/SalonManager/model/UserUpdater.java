@@ -28,7 +28,8 @@ public class UserUpdater {
             user.setEmail(((UserPrincipal) object).getUsername());
         }
         List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
-        updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        updatedAuthorities.add(new SimpleGrantedAuthority(user.getRoles()));
+
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
 

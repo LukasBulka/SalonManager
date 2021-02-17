@@ -1,12 +1,14 @@
 package pl.coderslab.SalonManager.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pl.coderslab.SalonManager.model.MyService;
 import pl.coderslab.SalonManager.model.User;
+import pl.coderslab.SalonManager.model.UserUpdater;
+import pl.coderslab.SalonManager.repository.MyServiceRepository;
 import pl.coderslab.SalonManager.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -24,15 +26,28 @@ import java.util.stream.Collectors;
 public class AdminController {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserUpdater userUpdater;
+    private final MyServiceRepository myServiceRepository;
+
+    // ModelAttributes
 
     @ModelAttribute("roles")
-    public Collection<String> roles() {
-        List<String> roles = new ArrayList<>();
-        roles.add("ADMIN");
-        roles.add("EMPLOYEE");
-        roles.add("USER");
-        return roles;
+    public List<String> roles() {
+        return Arrays.asList("ADMIN", "EMPLOYEE", "USER");
     }
+
+    @ModelAttribute("active")
+    public List<Boolean> active() {
+        return Arrays.asList(false, true);
+    }
+
+    @ModelAttribute("currency")
+    public List<String> currency() {
+        return Arrays.asList("PLN", "USD", "EUR");
+    }
+
+    // display admin section
 
     @GetMapping
     public String dashboardAdmin() {
@@ -45,12 +60,14 @@ public class AdminController {
         return "showUsers";
     }
 
+    // Filtering users
+
     @GetMapping("/showFilteredUsers")
     public String showUsers(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String[] options = request.getParameterValues("options");
         List<User> filteredUsers = new ArrayList<>();
         List<User> users;
-        if (options != null) {//sprobowac zrobis z options tablice bo metoda asList domyslnie nie moze byc nullem
+        if (options != null) {
             switch (options.length) {
                 case 1:
                     users = userRepository.findAll().stream().filter(el -> el.getRolesList().contains(options[0])).collect(Collectors.toList());
@@ -65,11 +82,133 @@ public class AdminController {
                     filteredUsers.addAll(users);
                     break;
             }
-        }else {
+        } else {
             response.sendRedirect("/admin/showUsers");
         }
 
         model.addAttribute("users", filteredUsers);
         return "showUsers";
+    }
+
+    // Users
+
+    @GetMapping("/addUser")
+    public String showAddUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "userForm";
+    }
+
+    @PostMapping("/addUser")
+    public String addUserByAdmin(@ModelAttribute() User user) {
+        User userToSave = new User(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                passwordEncoder.encode(user.getPassword()),
+                user.getRoles(), "");
+        userRepository.save(userToSave);
+        return "redirect:/admin/showUsers";
+    }
+
+
+    @GetMapping("/updateUser/{id}")
+    public String showUpdateUserForm(@PathVariable Long id, Model model) {
+        Optional<User> user = userRepository.findById(id);
+        model.addAttribute("user", user);
+        return "updateUserByAdmin";
+    }
+
+    @PostMapping("/updateUser/{id}")
+    public String updateUser(@PathVariable Long id,
+                             @RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam String email,
+                             @RequestParam String password,
+                             @RequestParam String roles,
+                             @RequestParam Boolean active) {
+
+        User user = userRepository.findById(id).get();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRoles(roles);
+        user.setActive(active);
+
+        userUpdater.update(user, email);
+        return "redirect:/admin/showUsers";
+    }
+
+
+    @GetMapping("/confirmRemoveUser/{id}")
+    public String confirmRemoveUser(@PathVariable Long id, Model model) {
+        model.addAttribute("id", id);
+        return "confirmRemoveUser";
+    }
+
+    @GetMapping("/removeUser/{id}")
+    public String removeUser(@PathVariable Long id) {
+        Optional<User> user = userRepository.findById(id);
+        user.ifPresent(userRepository::delete);
+        return "redirect:/admin/showUsers";
+    }
+
+    // Services
+
+    @GetMapping("/showServices")
+    public String showServices(Model model) {
+        model.addAttribute("services", myServiceRepository.findAll());
+        return "showServices";
+    }
+
+    @GetMapping("/addService")
+    public String showAddServiceForm(Model model) {
+        model.addAttribute("service", new MyService());
+        return "serviceForm";
+    }
+
+    @PostMapping("/addService")
+    public String addServiceByAdmin(@ModelAttribute() MyService myService) {
+        MyService myServiceToSave = new MyService(
+                myService.getName(),
+                myService.getPrice(),
+                myService.getCurrency());
+        myServiceRepository.save(myServiceToSave);
+        return "redirect:/admin/showServices";
+    }
+
+    @GetMapping("/updateService/{id}")
+    public String showUpdateServiceForm(@PathVariable Long id, Model model) {
+        Optional<MyService> myService = myServiceRepository.findById(id);
+        model.addAttribute("service", myService);
+        return "updateServiceForm";
+    }
+
+    @PostMapping("/updateService/{id}")
+    public String updateService(@PathVariable Long id,
+                                @RequestParam String name,
+                                @RequestParam String price,
+                                @RequestParam String currency) {
+
+        MyService myService = myServiceRepository.findById(id).get();
+        myService.setName(name);
+        myService.setPrice(price);
+        myService.setCurrency(currency);
+
+        myServiceRepository.save(myService);
+        return "redirect:/admin/showServices";
+    }
+
+    @GetMapping("/confirmRemoveService/{id}")
+    public String confirmRemoveService(@PathVariable Long id, Model model) {
+        model.addAttribute("id", id);
+        return "confirmRemoveService";
+    }
+
+    @GetMapping("/removeService/{id}")
+    public String removeService(@PathVariable Long id) {
+        Optional<MyService> myService = myServiceRepository.findById(id);
+        myService.ifPresent(myServiceRepository::delete);
+        return "redirect:/admin/showServices";
     }
 }

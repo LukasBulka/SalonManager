@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.model.UserUpdater;
+import pl.coderslab.SalonManager.repository.MyServiceRepository;
 import pl.coderslab.SalonManager.repository.UserRepository;
 
 @Controller
@@ -20,6 +21,7 @@ import pl.coderslab.SalonManager.repository.UserRepository;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final MyServiceRepository myServiceRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserUpdater userUpdater;
 
@@ -50,6 +52,12 @@ public class UserController {
 
         userUpdater.update(user,email);
         return "userAccount";
+    }
+
+    @GetMapping("/servicesList")
+    public String showServicesList(Model model) {
+        model.addAttribute("services", myServiceRepository.findAll());
+        return "showServices";
     }
 
     @GetMapping("/orderService")
