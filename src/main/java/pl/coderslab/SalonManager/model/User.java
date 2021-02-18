@@ -4,8 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,16 +26,32 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    @Column(name = "user_name")
+//    @Length(min = 5, message = "*Your user name must have at least 5 characters")
+//    @NotEmpty(message = "*Please provide a user name")
+//    private String userName;
+
+    @Column(name = "first_name")
+    @NotEmpty(message = "*Please provide first name")
     private String firstName;
 
+    @Column(name = "last_name")
+    @NotEmpty(message = "*Please provide last name")
     private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private String email; // username
-    @Column(nullable = false)
+    @Email(message = "*Please provide a valid Email")
+    @NotEmpty(message = "*Please provide an email")
+    private String email;
+
+    @Length(min = 5, message = "*Your password must have at least 5 characters")
+    @NotEmpty(message = "*Please provide your password")
     private String password;
+
+    @NotNull(message = "*Please choose at least 1 role")
     private String roles = "";
     private String permissions = "";
+
+    @NotNull(message = "*Please choose 1 option")
     private Boolean active;
 
     public User(String firstName,

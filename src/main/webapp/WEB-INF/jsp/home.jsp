@@ -4,4 +4,7 @@
 <c:if test="${not empty param.success}">
     <p>Account has been successfully deleted</p>
 </c:if>
+<c:if test="${not empty param.loginSuccess}">
+    <p>Successfully logged in</p>
+</c:if>
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

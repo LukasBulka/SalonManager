@@ -6,7 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.model.UserUpdater;
 import pl.coderslab.SalonManager.repository.MyServiceRepository;
@@ -53,7 +57,7 @@ public class UserController {
         user.setLastName(lastName);
         user.setPassword(passwordEncoder.encode(password));
 
-        userUpdater.update(user,email);
+        userUpdater.update(user, email);
         return "userAccount";
     }
 

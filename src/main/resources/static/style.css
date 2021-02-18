@@ -44,3 +44,6 @@ div {
     color: red;
     position: center;
 }
+.error {
+    color: red;
+}

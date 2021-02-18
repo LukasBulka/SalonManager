@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.SalonManager.model.MyService;
 import pl.coderslab.SalonManager.model.User;
@@ -13,7 +14,7 @@ import pl.coderslab.SalonManager.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Validator;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +31,6 @@ public class AdminController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserUpdater userUpdater;
     private final MyServiceRepository myServiceRepository;
-    Validator validator;
 
     // ModelAttributes
 
@@ -101,15 +101,20 @@ public class AdminController {
     }
 
     @PostMapping("/addUser")
-    public String addUserByAdmin(@ModelAttribute() User user) {
-        User userToSave = new User(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                passwordEncoder.encode(user.getPassword()),
-                user.getRoles(), "");
-        userRepository.save(userToSave);
-        return "redirect:/admin/showUsers";
+    public String addUserByAdmin(@ModelAttribute() @Valid User user, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "userForm";
+        } else {
+            User userToSave = new User(
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    passwordEncoder.encode(user.getPassword()),
+                    user.getRoles(), "");
+            userRepository.save(userToSave);
+            return "redirect:/admin/showUsers";
+        }
     }
 
 
@@ -127,9 +132,11 @@ public class AdminController {
                              @RequestParam String email,
                              @RequestParam String password,
                              @RequestParam String roles,
-                             @RequestParam Boolean active) {
-
-        User user = userRepository.findById(id).get();
+                             @RequestParam Boolean active,
+                             @ModelAttribute() @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "updateUserByAdmin";
+        }
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
@@ -165,40 +172,48 @@ public class AdminController {
 
     @GetMapping("/addService")
     public String showAddServiceForm(Model model) {
-        model.addAttribute("service", new MyService());
+        model.addAttribute("myService", new MyService());
         return "serviceForm";
     }
 
     @PostMapping("/addService")
-    public String addServiceByAdmin(@ModelAttribute() MyService myService) {
-        MyService myServiceToSave = new MyService(
-                myService.getName(),
-                myService.getPrice(),
-                myService.getCurrency());
-        myServiceRepository.save(myServiceToSave);
-        return "redirect:/admin/showServices";
+    public String addServiceByAdmin(@ModelAttribute() @Valid MyService myService, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "serviceForm";
+        } else {
+            MyService myServiceToSave = new MyService(
+                    myService.getName(),
+                    myService.getPrice(),
+                    myService.getCurrency());
+            myServiceRepository.save(myServiceToSave);
+            return "redirect:/admin/showServices";
+        }
     }
 
     @GetMapping("/updateService/{id}")
     public String showUpdateServiceForm(@PathVariable Long id, Model model) {
         Optional<MyService> myService = myServiceRepository.findById(id);
-        model.addAttribute("service", myService);
+        model.addAttribute("myService", myService);
         return "updateServiceForm";
     }
 
     @PostMapping("/updateService/{id}")
     public String updateService(@PathVariable Long id,
                                 @RequestParam String name,
-                                @RequestParam String price,
-                                @RequestParam String currency) {
+                                @RequestParam int price,
+                                @RequestParam String currency, @ModelAttribute() @Valid MyService myService, BindingResult bindingResult) {
 
-        MyService myService = myServiceRepository.findById(id).get();
-        myService.setName(name);
-        myService.setPrice(price);
-        myService.setCurrency(currency);
+        if (bindingResult.hasErrors()) {
+            return "updateServiceForm";
+        } else {
+            myService.setName(name);
+            myService.setPrice(price);
+            myService.setCurrency(currency);
 
-        myServiceRepository.save(myService);
-        return "redirect:/admin/showServices";
+            myServiceRepository.save(myService);
+            return "redirect:/admin/showServices";
+        }
     }
 
     @GetMapping("/confirmRemoveService/{id}")

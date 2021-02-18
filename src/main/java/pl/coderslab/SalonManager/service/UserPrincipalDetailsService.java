@@ -19,7 +19,15 @@ public class UserPrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         User user = this.userRepository.findByEmail(email);
+
         UserPrincipal userPrincipal = new UserPrincipal(user);
+        if (userPrincipal.getUser().getEmail() == null) {
+            throw new UsernameNotFoundException("No user found");
+        }
+        if (userPrincipal.getUser().getPassword() == null) {
+            throw new UsernameNotFoundException("No user found");
+        }
+
         return userPrincipal;
     }
 }

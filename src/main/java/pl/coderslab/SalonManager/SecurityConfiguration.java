@@ -10,32 +10,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import pl.coderslab.SalonManager.service.UserPrincipalDetailsService;
-
-import javax.validation.Validator;
 
 @Configuration
 @EnableWebSecurity
 @PropertySource(value = "classpath:application.properties", encoding = "UTF-8")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private LoginSuccessHandler loginSuccessHandler;
-//
-//    @Autowired
-//    private SuccessLoginHandler successLoginHandler;
-
     private final UserPrincipalDetailsService userPrincipalDetailsService;
 
 
     public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
-    }
-
-    @Bean
-    public Validator validator() {
-        return new LocalValidatorFactoryBean();
     }
 
     @Bean
@@ -65,9 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/management/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .and()
                 .formLogin()
+                .loginProcessingUrl("/authentication/login")
                 .loginPage("/authentication/login").permitAll()
-//                .successHandler(successLoginHandler)
-                .defaultSuccessUrl("/")
+                .failureUrl("/authentication/login?error=true")
+                .defaultSuccessUrl("/?loginSuccess=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
