@@ -10,11 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import pl.coderslab.SalonManager.service.UserPrincipalDetailsService;
+
+import javax.validation.Validator;
 
 @Configuration
 @EnableWebSecurity
-//@PropertySource(value = "classpath:application.properties", encoding = "UTF-8")
+@PropertySource(value = "classpath:application.properties", encoding = "UTF-8")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 //    @Autowired
@@ -28,6 +31,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
+    }
+
+    @Bean
+    public Validator validator() {
+        return new LocalValidatorFactoryBean();
     }
 
     @Bean

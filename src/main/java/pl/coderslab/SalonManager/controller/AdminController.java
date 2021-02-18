@@ -13,6 +13,7 @@ import pl.coderslab.SalonManager.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Validator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ public class AdminController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserUpdater userUpdater;
     private final MyServiceRepository myServiceRepository;
+    Validator validator;
 
     // ModelAttributes
 

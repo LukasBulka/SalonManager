@@ -36,6 +36,8 @@ public class Order {
 
     private LocalDateTime updatedAt;
 
+    private LocalDateTime orderedAt;
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
