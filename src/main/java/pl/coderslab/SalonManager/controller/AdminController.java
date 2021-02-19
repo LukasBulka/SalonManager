@@ -8,9 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.SalonManager.model.MyService;
 import pl.coderslab.SalonManager.model.User;
-import pl.coderslab.SalonManager.model.UserUpdater;
-import pl.coderslab.SalonManager.repository.MyServiceRepository;
-import pl.coderslab.SalonManager.repository.UserRepository;
+import pl.coderslab.SalonManager.service.MyServiceService;
+import pl.coderslab.SalonManager.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,10 +26,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final UserUpdater userUpdater;
-    private final MyServiceRepository myServiceRepository;
+    private final UserService userService;
+    private final MyServiceService myServiceService;
 
     // ModelAttributes
 
@@ -58,7 +56,7 @@ public class AdminController {
 
     @GetMapping("/showUsers")
     public String showUsers(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAllUsers());
         return "showUsers";
     }
 
@@ -72,15 +70,15 @@ public class AdminController {
         if (options != null) {
             switch (options.length) {
                 case 1:
-                    users = userRepository.findAll().stream().filter(el -> el.getRolesList().contains(options[0])).collect(Collectors.toList());
+                    users = userService.findAllUsers().stream().filter(el -> el.getRolesList().contains(options[0])).collect(Collectors.toList());
                     filteredUsers.addAll(users);
                     break;
                 case 2:
-                    users = userRepository.findAll().stream().filter(el -> el.getRolesList().contains(options[0]) || el.getRolesList().contains(options[1])).collect(Collectors.toList());
+                    users = userService.findAllUsers().stream().filter(el -> el.getRolesList().contains(options[0]) || el.getRolesList().contains(options[1])).collect(Collectors.toList());
                     filteredUsers.addAll(users);
                     break;
                 case 3:
-                    users = userRepository.findAll().stream().filter(el -> el.getRolesList().contains(options[0]) || el.getRolesList().contains(options[1]) || el.getRolesList().contains(options[2])).collect(Collectors.toList());
+                    users = userService.findAllUsers().stream().filter(el -> el.getRolesList().contains(options[0]) || el.getRolesList().contains(options[1]) || el.getRolesList().contains(options[2])).collect(Collectors.toList());
                     filteredUsers.addAll(users);
                     break;
             }
@@ -111,8 +109,8 @@ public class AdminController {
                     user.getLastName(),
                     user.getEmail(),
                     passwordEncoder.encode(user.getPassword()),
-                    user.getRoles(), "");
-            userRepository.save(userToSave);
+                    user.getRoles(), "", user.getActive());
+            userService.saveUser(userToSave);
             return "redirect:/admin/showUsers";
         }
     }
@@ -120,7 +118,7 @@ public class AdminController {
 
     @GetMapping("/updateUser/{id}")
     public String showUpdateUserForm(@PathVariable Long id, Model model) {
-        Optional<User> user = userRepository.findById(id);
+        Optional<User> user = userService.findUserById(id);
         model.addAttribute("user", user);
         return "updateUserByAdmin";
     }
@@ -144,7 +142,7 @@ public class AdminController {
         user.setRoles(roles);
         user.setActive(active);
 
-        userUpdater.update(user, email);
+        userService.update(user, email);
         return "redirect:/admin/showUsers";
     }
 
@@ -157,8 +155,8 @@ public class AdminController {
 
     @GetMapping("/removeUser/{id}")
     public String removeUser(@PathVariable Long id) {
-        Optional<User> user = userRepository.findById(id);
-        user.ifPresent(userRepository::delete);
+        Optional<User> user = userService.findUserById(id);
+        user.ifPresent(userService::deleteUser);
         return "redirect:/admin/showUsers";
     }
 
@@ -166,7 +164,7 @@ public class AdminController {
 
     @GetMapping("/showServices")
     public String showServices(Model model) {
-        model.addAttribute("services", myServiceRepository.findAll());
+        model.addAttribute("services", myServiceService.findAllServices());
         return "showServices";
     }
 
@@ -186,14 +184,14 @@ public class AdminController {
                     myService.getName(),
                     myService.getPrice(),
                     myService.getCurrency());
-            myServiceRepository.save(myServiceToSave);
+            myServiceService.saveMyService(myServiceToSave);
             return "redirect:/admin/showServices";
         }
     }
 
     @GetMapping("/updateService/{id}")
     public String showUpdateServiceForm(@PathVariable Long id, Model model) {
-        Optional<MyService> myService = myServiceRepository.findById(id);
+        Optional<MyService> myService = myServiceService.findMyServiceById(id);
         model.addAttribute("myService", myService);
         return "updateServiceForm";
     }
@@ -211,7 +209,7 @@ public class AdminController {
             myService.setPrice(price);
             myService.setCurrency(currency);
 
-            myServiceRepository.save(myService);
+            myServiceService.saveMyService(myService);
             return "redirect:/admin/showServices";
         }
     }
@@ -224,8 +222,8 @@ public class AdminController {
 
     @GetMapping("/removeService/{id}")
     public String removeService(@PathVariable Long id) {
-        Optional<MyService> myService = myServiceRepository.findById(id);
-        myService.ifPresent(myServiceRepository::delete);
+        Optional<MyService> myService = myServiceService.findMyServiceById(id);
+        myService.ifPresent(myServiceService::deleteMyService);
         return "redirect:/admin/showServices";
     }
 }

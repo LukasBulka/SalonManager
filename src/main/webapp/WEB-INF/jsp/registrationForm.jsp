@@ -1,9 +1,6 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
 <h1>Registration</h1>
-<c:if test="${not empty param.success}">
-    <p>Successfully registered</p>
-</c:if>
 <form:form method="post" modelAttribute="user">
 
     First name:

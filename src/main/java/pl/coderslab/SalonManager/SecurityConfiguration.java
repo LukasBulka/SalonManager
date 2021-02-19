@@ -17,12 +17,13 @@ import pl.coderslab.SalonManager.service.UserPrincipalDetailsService;
 @PropertySource(value = "classpath:application.properties", encoding = "UTF-8")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final UserPrincipalDetailsService userPrincipalDetailsService;
 
+    private final UserPrincipalDetailsService userPrincipalDetailsService;
 
     public SecurityConfiguration(UserPrincipalDetailsService userPrincipalDetailsService) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
     }
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

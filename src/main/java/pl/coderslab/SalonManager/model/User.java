@@ -51,7 +51,7 @@ public class User {
     private String roles = "";
     private String permissions = "";
 
-    @NotNull(message = "*Please choose 1 option")
+//    @NotNull(message = "*Please choose 1 option")
     private Boolean active;
 
     public User(String firstName,
@@ -59,14 +59,15 @@ public class User {
                 String email,
                 String password,
                 String roles,
-                String permissions) {
+                String permissions,
+                Boolean active) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.roles = roles;
         this.permissions = permissions;
-        this.active = true;
+        this.active = active;
     }
 
     public List<String> getRolesList() {

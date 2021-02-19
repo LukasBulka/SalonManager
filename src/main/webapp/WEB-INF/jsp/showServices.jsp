@@ -12,13 +12,6 @@
 </sec:authorize>
 <br>
 <br>
-<%--<form method="get" action="/admin/showFilteredUsers">--%>
-<%--    Select role to filter:<br>--%>
-<%--    <input type="checkbox" name="options" value="ADMIN">by Admin--%>
-<%--    <input type="checkbox" name="options" value="EMPLOYEE">by Employee--%>
-<%--    <input type="checkbox" name="options" value="USER">by User--%>
-<%--    <input type="submit" value="Search">--%>
-<%--</form>--%>
 <sec:authorize access="hasRole('ADMIN')">
     <a href="/admin/addService">Add new service</a>
 </sec:authorize>

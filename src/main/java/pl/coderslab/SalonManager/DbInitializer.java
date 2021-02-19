@@ -24,11 +24,15 @@
 //    public void run(String... args) {
 //        this.userRepository.deleteAll();
 //
-//        User admin = new User("Lukasz", "Bulka", "lukas.bulka@op.pl", passwordEncoder.encode("123"), "ADMIN", "");
-//        User employee = new User("Natasha", "Romanov", "blackwidow@avengers.com", passwordEncoder.encode("123"), "EMPLOYEE", "");
-//        User user = new User("Tony", "Stark", "ironman@avengers.com", passwordEncoder.encode("123"), "USER", "");
+//        User admin = new User("Lukasz", "Bulka", "lukas.bulka@op.pl", passwordEncoder.encode("123"), "ADMIN", "", true);
+//        User employee1 = new User("Natasha", "Romanov", "blackwidow@avengers.com", passwordEncoder.encode("123"), "EMPLOYEE", "", true);
+//        User employee2 = new User("Angelina", "Jolie", "angelina@jolie.com", passwordEncoder.encode("123"), "EMPLOYEE", "", true);
+//        User employee3= new User("Peggy", "Brown", "peggybrown@gmail.com", passwordEncoder.encode("123"), "EMPLOYEE", "", true);
+//        User user1 = new User("Tony", "Stark", "ironman@avengers.com", passwordEncoder.encode("123"), "USER", "", true);
+//        User user2 = new User("Johny", "Mnemonic", "johny@mnemonic.com", passwordEncoder.encode("123"), "USER", "", true);
+//        User user3 = new User("Hulk", "Hogan", "hulkhogan@agmail.com", passwordEncoder.encode("123"), "USER", "", true);
 //
-//        List<User> users = Arrays.asList(admin, employee, user);
+//        List<User> users = Arrays.asList(admin, employee1, employee2, employee3, user1, user2, user3);
 //        this.userRepository.saveAll(users);
 //
 //

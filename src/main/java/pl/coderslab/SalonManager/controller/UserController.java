@@ -1,32 +1,26 @@
 package pl.coderslab.SalonManager.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.SalonManager.model.User;
-import pl.coderslab.SalonManager.model.UserUpdater;
 import pl.coderslab.SalonManager.repository.MyServiceRepository;
-import pl.coderslab.SalonManager.repository.UserRepository;
+import pl.coderslab.SalonManager.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final MyServiceRepository myServiceRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final UserUpdater userUpdater;
 
     // display user panel
 
@@ -39,26 +33,32 @@ public class UserController {
 
     @GetMapping("/myProfile")
     public String showUserProfile(Model model) {
-        return getUserWithEmail(model, "showUserProfile");
+        return userService.getUserWithEmail(model, "showUserProfile");
     }
 
     @GetMapping("/editProfile")
     public String showEditUserProfileForm(Model model) {
-        return getUserWithEmail(model, "updateUserProfile");
+        return userService.getUserWithEmail(model, "updateUserProfile");
     }
 
     @PostMapping("/editProfile")
     public String getEditUserProfileFromForm(@RequestParam String firstName,
                                              @RequestParam String lastName,
                                              @RequestParam String email,
-                                             @RequestParam String password) {
-        User user = getUserWithEmail();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPassword(passwordEncoder.encode(password));
+                                             @RequestParam String password,
+                                             @ModelAttribute() @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "updateUserProfile";
+        } else {
+            user = userService.getUserWithEmail();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPassword(passwordEncoder.encode(password));
+            user.setActive(true);
 
-        userUpdater.update(user, email);
-        return "userAccount";
+            userService.update(user, email);
+            return "userAccount";
+        }
     }
 
     @GetMapping("/confirmRemoveUserAccount")
@@ -68,9 +68,9 @@ public class UserController {
 
     @GetMapping("/removeProfile")
     public String removeAccount(HttpServletRequest request) {
-        User user = getUserWithEmail();
+        User user = userService.getUserWithEmail();
         if (user != null) {
-            userRepository.deleteById(user.getId());
+            userService.deleteUserById(user.getId());
             request.getSession().invalidate();
         }
         return "redirect:/?success=true";
@@ -83,38 +83,5 @@ public class UserController {
     public String showServicesList(Model model) {
         model.addAttribute("services", myServiceRepository.findAll());
         return "showServices";
-    }
-
-    // Orders
-
-    @GetMapping("/orderService")
-    public String orderServiceForm() {
-        return "orderServiceForm";
-    }
-
-
-
-
-    // helping methods
-
-    private String getUserWithEmail(Model model, String view) {
-        String email = "";
-        Object userPrincipal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (userPrincipal instanceof UserDetails) {
-            email = ((UserDetails)userPrincipal).getUsername();
-        }
-        User user = userRepository.findByEmail(email);
-        model.addAttribute("user", user);
-        return view;
-    }
-
-    private User getUserWithEmail() {
-        String email = "";
-        Object userPrincipal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (userPrincipal instanceof UserDetails) {
-            email = ((UserDetails)userPrincipal).getUsername();
-        }
-        User user = userRepository.findByEmail(email);
-        return user;
     }
 }
