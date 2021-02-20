@@ -42,11 +42,6 @@ public class AdminController {
         return Arrays.asList(false, true);
     }
 
-    @ModelAttribute("currency")
-    public List<String> currency() {
-        return Arrays.asList("PLN", "USD", "EUR");
-    }
-
     // display admin section
 
     @GetMapping

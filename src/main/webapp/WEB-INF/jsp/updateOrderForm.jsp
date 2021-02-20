@@ -17,7 +17,7 @@
     Choose services:
     <form:errors path="services" cssClass="error"/><br>
     <form:checkboxes items="${services}" path="services"
-                     itemLabel="name" itemValue="id"/><br>
+                     itemLabel="name" itemValue="id" delimiter="<br>"/><br>
     <br>
     Choose order completion date:<br>
     <div class="container mt-5 mb-5" style="width: 400px">

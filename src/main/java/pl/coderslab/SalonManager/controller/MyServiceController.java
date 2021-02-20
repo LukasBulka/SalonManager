@@ -8,6 +8,8 @@ import pl.coderslab.SalonManager.model.MyService;
 import pl.coderslab.SalonManager.service.MyServiceService;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -18,6 +20,11 @@ public class MyServiceController {
 
     public MyServiceController(MyServiceService myServiceService) {
         this.myServiceService = myServiceService;
+    }
+
+    @ModelAttribute("currency")
+    public List<String> currency() {
+        return Arrays.asList("PLN", "USD", "EUR");
     }
 
     @GetMapping("/showServices")

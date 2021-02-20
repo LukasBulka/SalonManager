@@ -6,7 +6,7 @@
 <body>
 <h1 id="choose">Choose option:</h1>
 <div>
-    <button><a id="confirm" href="/admin/removeService/${id}">CONFIRM</a></button> <button><a id="cancel" href="/admin/showServices">CANCEL</a></button>
+    <button><a id="confirm" href="/myService/removeService/${id}">CONFIRM</a></button> <button><a id="cancel" href="/myService/showServices">CANCEL</a></button>
 </div>
 </body>
 </html>

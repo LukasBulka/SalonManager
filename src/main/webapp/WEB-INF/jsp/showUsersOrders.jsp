@@ -29,7 +29,7 @@
                 <c:forEach items="${userOrder.services}" var="service">
                     <div class="row">
                         <div class="col-md-12 bs-linebreak">
-                                ${service.name} ${service.price}
+                                ${service.name} ${service.price} ${service.currency}
                         </div>
                     </div>
                 </c:forEach>
