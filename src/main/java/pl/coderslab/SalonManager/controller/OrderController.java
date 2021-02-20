@@ -54,15 +54,15 @@ public class OrderController {
         return "showOrders";
     }
 
-    @GetMapping("/showOrdersByUser")
+    @GetMapping("/showUsersOrders")
     public String showOrdersByUser(Model model) {
         User user = userService.getUserWithEmail();
         List<Order> userOrders = new ArrayList<>();
         List<Order> allOrders = orderService.findAllOrders();
         allOrders.stream().filter(el -> el.getOrderedBy().getId().equals(user.getId())).forEach(userOrders::add);
 
-        model.addAttribute("orders", userOrders);
-        return "showOrders";// ewentualnie zrobic nowy widok "showUsersOrders"
+        model.addAttribute("usersOrders", userOrders);
+        return "showUsersOrders";
     }
 
     @GetMapping("/orderService")
@@ -88,6 +88,12 @@ public class OrderController {
                 LocalDateTime.now(),
                 LocalDateTime.now());
         orderService.saveOrder(orderToSave);
+
+        if (userService.getUserWithEmail().getRolesList().contains("USER")) {
+            return "redirect:/order/showUsersOrders";
+        }
         return "redirect:/order/showOrders";
     }
+
+
 }

@@ -2,9 +2,9 @@
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
-<h1>Admin Panel</h1>
+<h1>User Panel</h1>
 <h3>Orders list</h3>
-<a href="<c:url value="/admin"/>">Go back</a>
+<a href="<c:url value="/user"/>">Go back</a>
 <br>
 <br>
 <a href="<c:url value="/order/orderService"/>">Add new order</a><br>
@@ -19,14 +19,14 @@
         <th>Completion date</th>
         <th>Action</th>
     </tr>
-    <c:forEach items="${orders}" var="order">
+    <c:forEach items="${usersOrders}" var="userOrder">
         <tr>
-            <td>${order.id}</td>
-            <td>${order.name}</td>
-            <td>${order.orderedBy.firstName}</td>
-            <td>${order.performedBy.firstName}</td>
+            <td>${userOrder.id}</td>
+            <td>${userOrder.name}</td>
+            <td>${userOrder.orderedBy.firstName}</td>
+            <td>${userOrder.performedBy.firstName}</td>
             <td>
-                <c:forEach items="${order.services}" var="service">
+                <c:forEach items="${userOrder.services}" var="service">
                     <div class="row">
                         <div class="col-md-12 bs-linebreak">
                                 ${service.name} ${service.price}
@@ -34,10 +34,10 @@
                     </div>
                 </c:forEach>
             </td>
-            <td>${order.orderCompletionDate}</td>
+            <td>${userOrder.orderCompletionDate}</td>
             <td>
-                <a href="/order/updateOrder/${order.id}">Update</a><br>
-                <a href="/order/confirmRemoveOrder/${order.id}">Delete</a>
+                <a href="/order/updateOrder/${userOrder.id}">Update</a><br>
+                <a href="/order/confirmRemoveOrder/${userOrder.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>
