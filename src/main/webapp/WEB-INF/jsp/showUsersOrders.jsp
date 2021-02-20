@@ -37,7 +37,7 @@
             <td>${userOrder.orderCompletionDate}</td>
             <td>
                 <a href="/order/updateOrder/${userOrder.id}">Update</a><br>
-                <a href="/order/confirmRemoveOrder/${userOrder.id}">Delete</a>
+                <a href="/order/confirmRemoveOrderByUser/${userOrder.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>
