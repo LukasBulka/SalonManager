@@ -21,8 +21,8 @@
     <br>
     Choose order completion date:<br>
     <div class="container mt-5 mb-5" style="width: 400px">
-        <input type="text" id="picker" class="form-control" name="orderCompletionDate">
-
+        <form:errors path="orderCompletionDate" cssClass="error"/><br>
+        <form:input path="orderCompletionDate" id="picker" class="form-control" name="orderCompletionDate"/>
     </div>
     <script>
         $('#picker').datetimepicker({

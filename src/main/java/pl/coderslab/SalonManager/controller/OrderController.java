@@ -73,22 +73,25 @@ public class OrderController {
     }
 
     @PostMapping("/orderService")
-    public String addOrder(@ModelAttribute() @RequestParam()
+    public String addOrder(@RequestParam()
 //                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                                   String orderCompletionDate, Order order) {
+                                   String orderCompletionDate, @ModelAttribute() @Valid Order order, BindingResult bindingResult) {
 
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 //        LocalDateTime dateTime = LocalDateTime.parse(orderCompletionDate, formatter);
-
-        Order orderToSave = new Order(
-                order.getName(),
-                userService.getUserWithEmail(),
-                order.getPerformedBy(),
-                order.getServices(),
-                orderCompletionDate,
-                LocalDateTime.now(),
-                LocalDateTime.now());
-        orderService.saveOrder(orderToSave);
+        if (bindingResult.hasErrors()) {
+            return "updateOrderForm";
+        } else {
+            Order orderToSave = new Order(
+                    order.getName(),
+                    userService.getUserWithEmail(),
+                    order.getPerformedBy(),
+                    order.getServices(),
+                    orderCompletionDate,
+                    LocalDateTime.now(),
+                    LocalDateTime.now());
+            orderService.saveOrder(orderToSave);
+        }
 
         if (userService.getUserWithEmail().getRolesList().contains("USER")) {
             return "redirect:/order/showUsersOrders";

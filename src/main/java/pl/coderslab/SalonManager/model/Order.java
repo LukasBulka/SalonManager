@@ -5,10 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -26,24 +25,23 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Length(min = 5, max = 50, message = "*Order name must have at least 5 and maximum of 50 characters")
+    @NotNull(message = "*Please provide your order name e.g. \"Hair dyeing\"")
     private String name;
 
-//    @Length(min = 2, max = 50, message = "*Your name must have at least 2 and maximum of 50 characters")
-//    @NotNull(message = "*Please provide your name")
     @ManyToOne
     private User orderedBy;
 
-//    @NotNull(message = "*Please choose one of the option")
+    @NotNull(message = "*Please choose one of the option")
     @ManyToOne
     private User performedBy;
 
-//    @NotNull(message = "*Please choose at least one of the option")
+    @NotEmpty(message = "*Please choose at least one of the option")
     @ManyToMany(fetch = FetchType.EAGER)
     private List<MyService> services;
 
-//    @Future(message = "*The chosen date must be form the future")
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @Temporal(TemporalType.DATE)
+    @NotNull(message = "*Please choose a date")
+    @NotBlank(message = "*Please choose a date")
     private String orderCompletionDate;
 
     private LocalDateTime createdAt;
