@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.SalonManager.model.User;
-import pl.coderslab.SalonManager.repository.MyServiceRepository;
 import pl.coderslab.SalonManager.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,17 +18,12 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final MyServiceRepository myServiceRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-
-    // display user panel
 
     @GetMapping
     public String showUserAccount() {
         return "userAccount";
     }
-
-    // User CRUD
 
     @GetMapping("/myProfile")
     public String showUserProfile(Model model) {
@@ -74,14 +68,5 @@ public class UserController {
             request.getSession().invalidate();
         }
         return "redirect:/?success=true";
-    }
-
-
-    // Services
-
-    @GetMapping("/servicesList")
-    public String showServicesList(Model model) {
-        model.addAttribute("services", myServiceRepository.findAll());
-        return "showServices";
     }
 }

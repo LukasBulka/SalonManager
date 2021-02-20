@@ -13,7 +13,7 @@
 <br>
 <br>
 <sec:authorize access="hasRole('ADMIN')">
-    <a href="/admin/addService">Add new service</a>
+    <a href="/myService/addService">Add new service</a>
 </sec:authorize>
 <br>
 <br>
@@ -36,8 +36,8 @@
             <td>${service.currency}</td>
             <sec:authorize access="hasRole('ADMIN')">
                 <td>
-                    <a href="/admin/updateService/${service.id}">Update</a><br>
-                    <a href="/admin/confirmRemoveService/${service.id}">Delete</a>
+                    <a href="/myService/updateService/${service.id}">Update</a><br>
+                    <a href="/myService/confirmRemoveService/${service.id}">Delete</a>
                 </td>
             </sec:authorize>
         </tr>

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -20,6 +21,12 @@ public class Timetable {
     private Long id;
 
     private String name;
+
+    @OneToMany
+    private List<User> employees;
+
+    @ManyToMany
+    private List<Order> orders;
 
 
 
