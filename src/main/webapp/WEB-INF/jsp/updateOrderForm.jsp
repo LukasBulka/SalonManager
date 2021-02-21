@@ -24,17 +24,18 @@
         <form:errors path="orderCompletionDate" cssClass="error"/><br>
         <form:input path="orderCompletionDate" id="picker" class="form-control" name="orderCompletionDate"/>
     </div>
-    <script>
+    <script type="text/javascript">
         $('#picker').datetimepicker({
             timepicker: true,
             datepicker: true,
             format: 'Y-m-d H:i',
             hours12: false,
             step: 30,
-            disabledWeekDays:[0,6],
-            stepping: 30,
-            enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
-        })
+            startDate: Date.now(),
+            daysOfWeekDisabled: [0, 6],
+            todayBtn: true,
+            enabledHours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        })''
     </script>
     <br>
     <br>

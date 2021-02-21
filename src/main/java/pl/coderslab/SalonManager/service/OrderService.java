@@ -1,7 +1,6 @@
 package pl.coderslab.SalonManager.service;
 
 import org.springframework.stereotype.Service;
-import pl.coderslab.SalonManager.model.MyService;
 import pl.coderslab.SalonManager.model.Order;
 import pl.coderslab.SalonManager.repository.OrderRepository;
 

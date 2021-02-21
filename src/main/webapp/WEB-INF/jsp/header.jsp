@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>home</title>
-<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">--%>
+<%--    <link rel="stylesheet" href="style.css">--%>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet">
 

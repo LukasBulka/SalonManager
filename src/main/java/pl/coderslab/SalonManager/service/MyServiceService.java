@@ -2,7 +2,6 @@ package pl.coderslab.SalonManager.service;
 
 import org.springframework.stereotype.Service;
 import pl.coderslab.SalonManager.model.MyService;
-import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.repository.MyServiceRepository;
 
 import java.util.List;

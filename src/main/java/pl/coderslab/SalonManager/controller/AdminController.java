@@ -6,19 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.SalonManager.model.MyService;
+import pl.coderslab.SalonManager.model.Order;
 import pl.coderslab.SalonManager.model.User;
-import pl.coderslab.SalonManager.service.MyServiceService;
+import pl.coderslab.SalonManager.service.OrderService;
 import pl.coderslab.SalonManager.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -28,9 +26,7 @@ public class AdminController {
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserService userService;
-    private final MyServiceService myServiceService;
-
-    // ModelAttributes
+    private final OrderService orderService;
 
     @ModelAttribute("roles")
     public List<String> roles() {
@@ -42,8 +38,6 @@ public class AdminController {
         return Arrays.asList(false, true);
     }
 
-    // display admin section
-
     @GetMapping
     public String dashboardAdmin() {
         return "administration";
@@ -54,8 +48,6 @@ public class AdminController {
         model.addAttribute("users", userService.findAllUsers());
         return "showUsers";
     }
-
-    // Filtering users
 
     @GetMapping("/showFilteredUsers")
     public String showUsers(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -85,8 +77,6 @@ public class AdminController {
         return "showUsers";
     }
 
-    // Users
-
     @GetMapping("/addUser")
     public String showAddUserForm(Model model) {
         model.addAttribute("user", new User());
@@ -109,7 +99,6 @@ public class AdminController {
             return "redirect:/admin/showUsers";
         }
     }
-
 
     @GetMapping("/updateUser/{id}")
     public String showUpdateUserForm(@PathVariable Long id, Model model) {
@@ -141,7 +130,6 @@ public class AdminController {
         return "redirect:/admin/showUsers";
     }
 
-
     @GetMapping("/confirmRemoveUser/{id}")
     public String confirmRemoveUser(@PathVariable Long id, Model model) {
         model.addAttribute("id", id);
@@ -153,5 +141,21 @@ public class AdminController {
         Optional<User> user = userService.findUserById(id);
         user.ifPresent(userService::deleteUser);
         return "redirect:/admin/showUsers";
+    }
+
+    @GetMapping("/showTimetable")
+    public String showTimetable(Model model) {
+
+        List<User> employees = userService.findAllUsers().stream().filter(el -> el.getRolesList().contains("EMPLOYEE")).collect(Collectors.toList());
+        List<Order> orders = orderService.findAllOrders();
+        Map<String, List<String>> timetables = new HashMap<>();
+
+        for (User user : employees) {
+            List<String> strings = orders.stream().filter(el -> el.getPerformedBy().equals(user)).map(Order::getOrderCompletionDate).sorted().collect(Collectors.toList());
+            timetables.put(user.getFirstName(), strings);
+        }
+
+        model.addAttribute("timetables", timetables);
+        return "timetable";
     }
 }

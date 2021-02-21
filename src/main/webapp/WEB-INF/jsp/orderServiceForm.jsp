@@ -33,7 +33,7 @@
         <form:errors path="orderCompletionDate" cssClass="error"/><br>
         <form:input path="orderCompletionDate" id="picker" class="form-control" name="orderCompletionDate"/>
     </div>
-    <script>
+    <script type="text/javascript">
         $('#picker').datetimepicker({
             timepicker: true,
             datepicker: true,

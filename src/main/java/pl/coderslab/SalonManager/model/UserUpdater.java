@@ -19,20 +19,20 @@ public class UserUpdater {
     public UserUpdater(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-    public void update(User user, String email) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object object = authentication.getPrincipal();
-        if (object instanceof UserPrincipal) {
-            ((UserPrincipal)object).getUser().setEmail(email);
-            user.setEmail(((UserPrincipal) object).getUsername());
-        }
-        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
-        updatedAuthorities.add(new SimpleGrantedAuthority(user.getRoles()));
-
-        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
-        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-
-        userRepository.save(user);
-    }
+//
+//    public void update(User user, String email) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Object object = authentication.getPrincipal();
+//        if (object instanceof UserPrincipal) {
+//            ((UserPrincipal)object).getUser().setEmail(email);
+//            user.setEmail(((UserPrincipal) object).getUsername());
+//        }
+//        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
+//        updatedAuthorities.add(new SimpleGrantedAuthority(user.getRoles()));
+//
+//        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
+//        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+//
+//        userRepository.save(user);
+//    }
 }
