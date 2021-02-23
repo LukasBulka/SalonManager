@@ -6,14 +6,18 @@
 <a id="userAccount" href="<c:url value="/userAccount"/>">User Account</a>
 </sec:authorize>
 <sec:authorize access="hasRole('ADMIN')">
-<a id="administration" href="<c:url value="/administration"/>">Administration</a>
+    <a id="administration" href="<c:url value="/administration"/>">Administration</a>
 </sec:authorize>
 <sec:authorize access="hasRole('EMPLOYEE')">
-<a id="management" href="<c:url value="/management"/>">Management</a>
+    <a id="management" href="<c:url value="/management"/>">Management</a>
 </sec:authorize>
 <sec:authorize access="hasRole('ADMIN')">
     <a id="management" href="<c:url value="/management"/>">Management</a>
 </sec:authorize>
-<a id="logout" href="<c:url value="/logout"/>">LOG OUT</a>
-<a id="login" href="<c:url value="/login"/>">LOG IN</a>
-<a id="signin" href="<c:url value="/register"/>">SIGN IN</a><br>
+    <a id="signin" href="<c:url value="/register"/>">SIGN IN</a>
+<sec:authorize access="!isAuthenticated()">
+    <a id="login" href="<c:url value="/login"/>">LOG IN</a>
+</sec:authorize>
+<sec:authorize access="isAuthenticated()">
+    <a id="logout" href="<c:url value="/logout"/>">LOG OUT</a>
+</sec:authorize>

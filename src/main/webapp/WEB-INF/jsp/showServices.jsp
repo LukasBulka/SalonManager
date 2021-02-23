@@ -7,12 +7,18 @@
 <sec:authorize access="hasRole('USER')">
     <a href="<c:url value="/user"/>">Go back</a>
 </sec:authorize>
+<sec:authorize access="hasRole('EMPLOYEE')">
+    <a href="<c:url value="/employee"/>">Go back</a>
+</sec:authorize>
 <sec:authorize access="hasRole('ADMIN')">
     <a href="<c:url value="/admin"/>">Go back</a>
 </sec:authorize>
 <br>
 <br>
 <sec:authorize access="hasRole('ADMIN')">
+    <a href="/myService/addService">Add new service</a>
+</sec:authorize>
+<sec:authorize access="hasRole('EMPLOYEE')">
     <a href="/myService/addService">Add new service</a>
 </sec:authorize>
 <br>
@@ -34,6 +40,12 @@
             <td>${service.name}</td>
             <td>${service.price}</td>
             <td>${service.currency}</td>
+            <sec:authorize access="hasRole('EMPLOYEE')">
+                <td>
+                    <a href="/myService/updateService/${service.id}">Update</a><br>
+                    <a href="/myService/confirmRemoveService/${service.id}">Delete</a>
+                </td>
+            </sec:authorize>
             <sec:authorize access="hasRole('ADMIN')">
                 <td>
                     <a href="/myService/updateService/${service.id}">Update</a><br>

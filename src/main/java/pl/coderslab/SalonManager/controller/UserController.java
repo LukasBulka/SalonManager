@@ -51,7 +51,12 @@ public class UserController {
             user.setActive(true);
 
             userService.update(user, email);
-            return "userAccount";
+
+            if (userService.getUserWithEmail().getRolesList().contains("USER")) {
+                return "redirect:/user/userAccount";
+            }
+            return "redirect:/employee";
+
         }
     }
 

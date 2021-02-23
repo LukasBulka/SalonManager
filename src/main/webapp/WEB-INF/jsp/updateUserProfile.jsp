@@ -2,7 +2,12 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
 <h1>My profile - update</h1>
-<a href="<c:url value="/user"/>">Go back</a>
+<sec:authorize access="hasRole('USER')">
+    <a href="<c:url value="/user"/>">Go back</a>
+</sec:authorize>
+<sec:authorize access="hasRole('EMPLOYEE')">
+    <a href="<c:url value="/employee"/>">Go back</a>
+</sec:authorize>
 <form:form method="post" modelAttribute="user">
     First name:
     <form:errors path="firstName" cssClass="error"/><br>

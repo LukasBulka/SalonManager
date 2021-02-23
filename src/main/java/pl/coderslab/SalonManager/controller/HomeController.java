@@ -33,7 +33,7 @@ public class HomeController {
     }
 
     @GetMapping("/management")
-    public String management() { return "management";
+    public String management() { return "redirect:/employee";
     }
 
     @GetMapping("/register")
