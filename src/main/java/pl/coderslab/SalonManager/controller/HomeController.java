@@ -1,12 +1,20 @@
 package pl.coderslab.SalonManager.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.coderslab.SalonManager.service.MyServiceService;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
+    private final MyServiceService myServiceService;
+
+    public HomeController(MyServiceService myServiceService) {
+        this.myServiceService = myServiceService;
+    }
 
     @GetMapping("")
     public String home() { return "home";
@@ -17,7 +25,9 @@ public class HomeController {
     }
 
     @GetMapping("/price")
-    public String price() { return "price";
+    public String price(Model model) {
+        model.addAttribute("services", myServiceService.findAllServices());
+        return "price";
     }
 
     @GetMapping("/contact")
@@ -37,11 +47,13 @@ public class HomeController {
     }
 
     @GetMapping("/register")
-    public String register() { return "redirect:/authentication/registration";
+    public String register() {
+        return "redirect:/authentication/registration";
     }
 
     @GetMapping("/login")
-    public String login() { return "redirect:/authentication/login";
+    public String login() {
+        return "redirect:/authentication/login";
     }
 
     @GetMapping("/logout")

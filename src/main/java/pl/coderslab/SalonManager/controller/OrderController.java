@@ -80,7 +80,7 @@ public class OrderController {
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 //        LocalDateTime dateTime = LocalDateTime.parse(orderCompletionDate, formatter);
         if (bindingResult.hasErrors()) {
-            return "updateOrderForm";
+            return "orderServiceForm";
         } else {
             Order orderToSave = new Order(
                     order.getName(),

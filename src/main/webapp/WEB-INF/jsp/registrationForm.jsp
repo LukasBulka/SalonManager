@@ -1,26 +1,55 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <%@ include file="/WEB-INF/jsp/navbar.jsp" %>
-<h1>Registration</h1>
-<form:form method="post" modelAttribute="user">
+<div class="container login">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-md-offset-3">
 
-    First name:
-    <form:errors path="firstName" cssClass="error"/><br>
-    <form:input path="firstName"/><br>
-    <br>
-    Last name:
-    <form:errors path="lastName" cssClass="error"/><br>
-    <form:input path="lastName"/><br>
-    <br>
-    Email:
-    <form:errors path="email" cssClass="error"/><br>
-    <form:input path="email"/><br>
-    <br>
-    Password:
-    <form:errors path="password" cssClass="error"/><br>
-    <form:password path="password"/><br>
-    <br>
-    <input type="submit" value="Sign in"/>
-    <span>Already registered? <a href="<c:url value="/authentication/login"/>">Log in here</a></span>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form:form>
-<%@ include file="/WEB-INF/jsp/footer.jsp" %>
+            <h3 style="color: goldenrod">Registration Page </h3>
+
+            <form:form method="post" modelAttribute="user">
+
+                <div class="form-group">
+                    <label for="firstName"> First name </label> :
+                    <form:errors path="firstName" cssClass="error"/>
+                    <form:input path="firstName" class="form-control" id="firstName" name="firstName"
+                                placeholder="Enter your first name"/>
+                </div>
+                <div class="form-group">
+                    <label for="lastName"> Last name </label> :
+                    <form:errors path="lastName" cssClass="error"/>
+                    <form:input path="lastName" class="form-control" id="lastName" name="lastName"
+                                placeholder="Enter your last name"/>
+                </div>
+                <div class="form-group">
+                    <label for="email"> Email </label> :
+                    <form:errors path="email" cssClass="error"/><br>
+                    <form:input path="email" class="form-control" id="email" name="email"
+                                placeholder="Enter email"/>
+                </div>
+                <div class="form-group">
+                    <label for="password"> Password </label> :
+                    <form:errors path="password" cssClass="error"/><br>
+                    <form:password path="password" class="form-control" id="password" name="password"
+                                   placeholder="Enter password"/>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" name="login-submit" id="login-submit"
+                                   class="form-control btn btn-primary" value="Sign In"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span>Already registered? <a
+                            href="<c:url value="/authentication/login"/>">Log in here</a></span>
+                </div>
+
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+            </form:form>
+        </div>
+    </div>
+</div>

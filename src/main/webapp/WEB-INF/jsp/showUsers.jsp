@@ -1,47 +1,57 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
-<%@ include file="/WEB-INF/jsp/navbar.jsp" %>
-<h1>Admin Panel</h1>
-<h3>User list</h3>
-<a href="<c:url value="/admin"/>">Go back</a>
-<br>
-<br>
-<form method="get" action="/admin/showFilteredUsers">
-    Select role to filter:<br>
-    <input type="checkbox" name="options" value="ADMIN">by Admin
-    <input type="checkbox" name="options" value="EMPLOYEE">by Employee
-    <input type="checkbox" name="options" value="USER">by User
-    <input type="submit" value="Search">
-</form>
+<%@ include file="/WEB-INF/jsp/administration.jsp" %>
 
-<br>
-<a href="<c:url value="/admin/addUser"/>">Add new user</a><br>
-<br>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Email</th>
-        <th>Roles</th>
-        <th>Active</th>
-        <th>Action</th>
-    </tr>
-    <c:forEach items="${users}" var="user">
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.firstName}</td>
-            <td>${user.lastName}</td>
-            <td>${user.email}</td>
-            <td>${user.roles}</td>
-            <td>${user.active}</td>
-            <td>
-                <a href="/admin/updateUser/${user.id}">Update</a><br>
-                <a href="/admin/confirmRemoveUser/${user.id}">Delete</a>
-            </td>
-        </tr>
-    </c:forEach>
-</table>
-
-<%@ include file="/WEB-INF/jsp/footer.jsp" %>
+<%--        Main--%>
+<main role="main" class="col-md-10 ml-sm-auto px-4">
+    <h4 style="color: goldenrod">Users list</h4>
+    <div class="form-group">
+        <form method="get" action="/admin/showFilteredUsers">
+            Select role to filter:<br>
+            <input type="checkbox" name="options" value="ADMIN"> Admin
+            <input type="checkbox" name="options" value="EMPLOYEE"> Employee
+            <input type="checkbox" name="options" value="USER"> User
+            <input class="action" type="submit" value="Search">
+        </form>
+    </div>
+    <a href="<c:url value="/admin/addUser"/>">
+        <button class="action">Add user</button>
+    </a>
+    <div class="table table-striped">
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Active</th>
+                <th>Action</th>
+            </tr>
+            <c:forEach items="${users}" var="user">
+            <tr>
+                <td>${user.id}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.email}</td>
+                <td>${user.roles}</td>
+                <td>${user.active}</td>
+                <td>
+                    <a href="<c:url value="/admin/updateUser/${user.id}"/>">
+                        <button class="action">Update</button>
+                    </a>
+                    <a href="<c:url value="/admin/confirmRemoveUser/${user.id}"/>">
+                        <button class="action">Delete</button>
+                    </a>
+                </td>
+            </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</main>
+</div>
+</div>

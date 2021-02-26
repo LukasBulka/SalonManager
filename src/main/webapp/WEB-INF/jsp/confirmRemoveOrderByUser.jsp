@@ -1,13 +1,14 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>confirm</title>
-</head>
-<body>
-<h1 id="choose">Choose option:</h1>
-<div>
-    <button><a href="/order/removeOrder/${id}">CONFIRM</a></button>
-    <button><a href="/order/showUsersOrders">CANCEL</a></button>
+<%@ include file="/WEB-INF/jsp/header.jsp" %>
+<%@ include file="/WEB-INF/jsp/navbar.jsp" %>
+<div class="container login confirm">
+    <div class="row justify-content-center">
+        <h3 id="choose">Choose option:</h3>
+        <div class="col-md-6 col-md-offset-3">
+            <div class="form-group">
+                <button><a href="/order/removeOrder/${id}">CONFIRM</a></button>
+                <button><a href="/order/showUsersOrders">CANCEL</a></button>
+            </div>
+        </div>
+    </div>
 </div>
-</body>
-</html>
+<%@ include file="/WEB-INF/jsp/footer.jsp" %>

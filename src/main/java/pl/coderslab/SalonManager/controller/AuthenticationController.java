@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.SalonManager.model.User;
 import pl.coderslab.SalonManager.repository.UserRepository;
+import pl.coderslab.SalonManager.service.UserService;
 
 import javax.validation.Valid;
 
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/authentication")
 public class AuthenticationController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
@@ -31,7 +32,7 @@ public class AuthenticationController {
     @PostMapping("/registration")
     public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
 
-        User userAlreadyExists = userRepository.findByEmail(user.getEmail());
+        User userAlreadyExists = userService.findUserByEmail(user.getEmail());
         if (userAlreadyExists != null) {
             bindingResult.rejectValue("email", "error.user", "*There is already a user registered with the given email, please provide another email");
         }
@@ -45,7 +46,7 @@ public class AuthenticationController {
                     passwordEncoder.encode(user.getPassword()),
                     "USER",
                     "", true);
-            userRepository.save(userToSave);
+            userService.saveUser(userToSave);
             return "redirect:/?registrationSuccess=true";
         }
     }

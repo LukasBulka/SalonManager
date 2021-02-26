@@ -142,20 +142,4 @@ public class AdminController {
         user.ifPresent(userService::deleteUser);
         return "redirect:/admin/showUsers";
     }
-
-    @GetMapping("/showTimetable")
-    public String showTimetable(Model model) {
-
-        List<User> employees = userService.findAllUsers().stream().filter(el -> el.getRolesList().contains("EMPLOYEE")).collect(Collectors.toList());
-        List<Order> orders = orderService.findAllOrders();
-        Map<String, List<String>> timetables = new HashMap<>();
-
-        for (User user : employees) {
-            List<String> strings = orders.stream().filter(el -> el.getPerformedBy().equals(user)).map(Order::getOrderCompletionDate).sorted().collect(Collectors.toList());
-            timetables.put(user.getFirstName(), strings);
-        }
-
-        model.addAttribute("timetables", timetables);
-        return "timetable";
-    }
 }
