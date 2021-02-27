@@ -38,4 +38,22 @@ public class EmailService implements EmailSender {
             throw new IllegalStateException("Failed to send email");
         }
     }
+
+    @Override
+    public void contactUs(String name, String from, String message) {
+
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            mimeMessageHelper.setText(message);
+            mimeMessageHelper.setTo("salonManager@salonManager.com");
+            mimeMessageHelper.setFrom(from);
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException ex) {
+            LOGGER.error("Failed to send email", ex);
+            throw new IllegalStateException("Failed to send email");
+        }
+    }
 }

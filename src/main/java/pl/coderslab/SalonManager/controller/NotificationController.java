@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.SalonManager.notification.EmailService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/notification")
 public class NotificationController {
@@ -17,7 +19,7 @@ public class NotificationController {
     @GetMapping("/cancelVisit/{firstName}/{email}/{order}")
     public String sendCancelEmail(@PathVariable String firstName, @PathVariable String email, @PathVariable String order) {
 
-        String link = "http://localhost:8080/";
+        String link = "http://localhost:8080/contact";
         String recipient = email;
         String subject = "Your visit has been canceled";
         String msg = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
@@ -94,7 +96,7 @@ public class NotificationController {
     @GetMapping("/rescheduleVisit/{firstName}/{email}/{order}")
     public String sendRescheduleEmail(@PathVariable String firstName, @PathVariable String email, @PathVariable String order) {
 
-        String link = "http://localhost:8080/";
+        String link = "http://localhost:8080/contact";
         String recipient = email;
         String subject = "Your visit needs to be reschedule";
 
