@@ -52,6 +52,12 @@
                         <a href="<c:url value="/order/confirmRemoveOrderByOthers/${order.id}"/>">
                             <button class="action">Delete</button>
                         </a>
+                        <a href="<c:url value="/notification/cancelVisit/${order.orderedBy.firstName}/${order.orderedBy.email}/${order.orderCompletionDate}"/>">
+                            <button class="action">Cancel visit</button>
+                        </a>
+                        <a href="<c:url value="/notification/rescheduleVisit/${order.orderedBy.firstName}/${order.orderedBy.email}/${order.orderCompletionDate}"/>">
+                            <button class="action">Reschedule</button>
+                        </a>
                     </td>
                 </tr>
             </c:forEach>

@@ -39,7 +39,7 @@ public class User {
     @NotEmpty(message = "*Please provide last name")
     private String lastName;
 
-    @Email(message = "*Please provide a valid Email")
+    @Email(message = "*Please provide a valid NotificationConfig")
     @NotEmpty(message = "*Please provide an email")
     private String email;
 
