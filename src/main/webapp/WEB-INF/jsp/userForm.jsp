@@ -36,15 +36,15 @@
                                    placeholder="Enter password"/>
                 </div>
                 <div class="form-group">
-                    <label for="roles"> Password </label> :
+                    <label for="roles"> Role </label> :
                     <form:errors path="roles" cssClass="error"/><br>
-                    <form:checkboxes items="${roles}" path="roles" class="form-control" id="roles" name="roles"
+                    <form:checkboxes items="${roles}" path="roles" id="roles" name="roles"
                                      placeholder="Choose role"/>
                 </div>
                 <div class="form-group">
-                    <label for="active"> Password </label> :
+                    <label for="active"> Active </label> :
                     <form:errors path="active" cssClass="error"/><br>
-                    <form:radiobuttons items="${active}" path="active" class="form-control" id="active" name="active"
+                    <form:radiobuttons items="${active}" path="active" id="active" name="active"
                                        placeholder="Set active"/>
                 </div>
                 <div class="form-group">

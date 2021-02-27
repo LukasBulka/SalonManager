@@ -9,12 +9,15 @@
                     <li class="nav-item">
                         <h4>Administration</h4>
                         <hr>
+                        <h6>
+                            <sec:authorize access="isAuthenticated()">
+                                <p>User: <sec:authentication property="principal.username"/></p>
+                            </sec:authorize>
+                        </h6>
+                        <hr>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/admin/showUsers"/>">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="/admin/addEmployee"/>">Employees</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/myService/showServices"/>">Services</a>

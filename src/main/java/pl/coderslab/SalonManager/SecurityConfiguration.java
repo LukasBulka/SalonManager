@@ -24,7 +24,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
     }
 
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -36,6 +35,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         authenticationProvider.setUserDetailsService(userPrincipalDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
+    }
+
+    @Bean
+    public SuccessLoginHandler loginHandler() {
+        return new SuccessLoginHandler();
     }
 
     @Override
@@ -55,7 +59,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authentication/login")
                 .loginPage("/authentication/login").permitAll()
                 .failureUrl("/authentication/login?error=true")
-                .defaultSuccessUrl("/authentication/login?loginSuccess=true")
+//                .defaultSuccessUrl("/authentication/login?loginSuccess=true")
+                .successHandler(loginHandler())
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()

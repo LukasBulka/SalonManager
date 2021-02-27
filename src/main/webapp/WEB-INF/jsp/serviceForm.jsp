@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label for="currency"> Currency </label> :
                     <form:errors path="currency" cssClass="error"/><br>
-                    <form:radiobuttons items="${currency}" path="currency" class="form-control" id="currency" name="currency"
+                    <form:radiobuttons items="${currency}" path="currency" id="currency" name="currency"
                                        placeholder="Choose curency"/>
                 </div>
                 <div class="form-group">
