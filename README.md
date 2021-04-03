@@ -27,28 +27,5 @@ The main purpose of this web application is to help the owner or manager manage 
 * InteliJ IDEA
 
 ## Functionalities
-* landing page
-* registration
-* log in
-  * ADMIN
-    * tworzenie usług
-    * dodawanie 
-    * modyfikowanie  
-    * usuwanie
-    * wyświetlanie listy usług
-    * tworzenie harmonogramu dla pracownika
-    * tworzenie 
-    * modyfikowanie 
-  * EMPLOYEE
-    * wyświetlanie harmonogramu
-    * wysyłanie powiadomien
-    * przeglądanie oraz blokowanie użytkowników przez administratora ???,
-  * USER
-    * zarządzanie usługami dla zalogowanego użytkownika,
-    * wybór 
-    * edycja
-    * rezygnacja
-    * wyświetlanie listy dodanych uslug
-
 
 ## Demo
