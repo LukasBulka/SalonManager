@@ -34,7 +34,7 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 ![home][home]
 1. about:
 ![about][about]
-1. price list
+1. price list:
 ![priceList][priceList]
 ![home][home]
 ![home][home]
@@ -47,7 +47,7 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 
 [home]: images/home.png
 [about]: images/about.png
-[home]: images/priceList.png
+[priceList]: images/priceList.png
 [home]: images/home.png
 [home]: images/home.png
 [home]: images/home.png
