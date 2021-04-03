@@ -32,17 +32,6 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 ## Demo
 1. home:
 ![home][home]  
-1. Add user:
-![add_user][add_user]
-1. Show user:
-![show_user][show_user]
-1. Edit user:
-![edit_user][edit_user]
-1. Delete user: 
-![delete_user][delete_user]
 
-[home]: images/home.png "Users list"
-[add_user]: images/addUser.png "Add user"
-[show_user]: images/userDetails.png "Show user details"
-[edit_user]: images/editUser.png "Edit user"
-[delete_user]: images/deleteUser.png "Delete user"
+[home]: images/home.png
+
