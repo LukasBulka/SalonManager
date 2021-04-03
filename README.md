@@ -30,4 +30,19 @@ The main purpose of this web application is to help the owner or manager manage 
 Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on Heroku to discover full functionalities.
 
 ## Demo
-in progress
+1. home:
+![home][home]  
+1. Add user:
+![add_user][add_user]
+1. Show user:
+![show_user][show_user]
+1. Edit user:
+![edit_user][edit_user]
+1. Delete user: 
+![delete_user][delete_user]
+
+[home]: images/home.png "Users list"
+[add_user]: images/addUser.png "Add user"
+[show_user]: images/userDetails.png "Show user details"
+[edit_user]: images/editUser.png "Edit user"
+[delete_user]: images/deleteUser.png "Delete user"
