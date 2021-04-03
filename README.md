@@ -28,4 +28,6 @@ The main purpose of this web application is to help the owner or manager manage 
 
 ## Functionalities
 Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on Heroku to discover full functionalities.
+
 ## Demo
+in progress
