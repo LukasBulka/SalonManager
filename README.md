@@ -45,17 +45,22 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 1. log in
 ![logIn][logIn]
 1. more validation
-[moreValidation][moreValidation]
+![moreValidation][moreValidation]
 1. users list on admin dashboard
 ![usersList][usersList]
 1. users filtered by role on admin dashboard
 ![filterUsers][filterUsers]
 1. services CRUD on admin panel
 ![adminServices][adminServices]
-1. 
-![home][home]
-![home][home]
-![home][home]
+1. user account on user dashboard:
+![userAccount][userAccount]
+1. user update on user dashboard:
+![userUpdate][userUpdate]
+1. user orders on user dashboard:
+![myOrders][myOrders]
+1. order service on user dashboard:
+![orderService][orderService]
+![orderService2][orderService2]
 
 
 [home]: images/home.png
@@ -69,10 +74,10 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 [usersList]: images/adminUsers.png
 [filterUsers]: images/filterUsers.png
 [adminServices]: images/adminServices.png
-[home]: images/home.png
-[home]: images/home.png
-[home]: images/home.png
-[home]: images/home.png
-[home]: images/home.png
+[userAccount]: images/userAccount.png
+[userUpdate]: images/userUpdate.png
+[myOrders]: images/myOrders.png
+[orderService]: images/orderService.png
+[orderService2]: images/orderService2.png
 
 
