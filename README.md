@@ -40,10 +40,19 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 ![contact][contact]
 1. sign in
 ![signIn][signIn]
+1. validation
+![validation][validation]
 1. log in
 ![logIn][logIn]
+1. more validation
+[validation2][validation2]
 1. users list on admin dashboard
 ![usersList][usersList]
+1. users filtered by role on admin dashboard
+![filterUsers][filterUsers]
+1. services CRUD on admin panel
+![adminServices][adminServices]
+1. 
 ![home][home]
 ![home][home]
 ![home][home]
@@ -54,8 +63,12 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 [priceList]: images/priceList.png
 [contact]: images/contact.png
 [signIn]: images/signIn.png
+[validation]: images/validation.png
 [logIn]: images/logIn.png
+[validation2]: images/validation2.png
 [usersList]: images/adminUsers.png
+[filterUsers]: images/filterUsers.png
+[adminServices]: images/adminServices.png
 [home]: images/home.png
 [home]: images/home.png
 [home]: images/home.png
