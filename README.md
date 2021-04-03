@@ -31,7 +31,29 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 
 ## Demo
 1. home:
-![home][home]  
+![home][home]
+![about][about]
+![home][home]
+![home][home]
+![home][home]
+![home][home]
+![home][home]
+![home][home]
+![home][home]
+![home][home]
+
 
 [home]: images/home.png
+[about]: images/about.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+[home]: images/home.png
+
 
