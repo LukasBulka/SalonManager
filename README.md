@@ -45,7 +45,7 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 1. log in
 ![logIn][logIn]
 1. more validation
-[validation2][validation2]
+[moreValidation][moreValidation]
 1. users list on admin dashboard
 ![usersList][usersList]
 1. users filtered by role on admin dashboard
@@ -65,7 +65,7 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 [signIn]: images/signIn.png
 [validation]: images/validation.png
 [logIn]: images/logIn.png
-[validation2]: images/validation2.png
+[moreValidation]: images/validation2.png
 [usersList]: images/adminUsers.png
 [filterUsers]: images/filterUsers.png
 [adminServices]: images/adminServices.png
