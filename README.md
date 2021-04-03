@@ -36,10 +36,14 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 ![about][about]
 1. price list:
 ![priceList][priceList]
-![home][home]
-![home][home]
-![home][home]
-![home][home]
+1. contact:
+![contact][contact]
+1. sign in
+![signIn][signIn]
+1. log in
+![logIn][logIn]
+1. users list on admin dashboard
+![usersList][usersList]
 ![home][home]
 ![home][home]
 ![home][home]
@@ -48,10 +52,10 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 [home]: images/home.png
 [about]: images/about.png
 [priceList]: images/priceList.png
-[home]: images/home.png
-[home]: images/home.png
-[home]: images/home.png
-[home]: images/home.png
+[contact]: images/contact.png
+[signIn]: images/signIn.png
+[logIn]: images/logIn.png
+[usersList]: images/adminUsers.png
 [home]: images/home.png
 [home]: images/home.png
 [home]: images/home.png
