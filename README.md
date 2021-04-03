@@ -65,7 +65,7 @@ Please visit [salonManager](https://salonmanagerfinalproject.herokuapp.com) on H
 [signIn]: images/signIn.png
 [validation]: images/validation.png
 [logIn]: images/logIn.png
-[moreValidation]: images/validation2.png
+[moreValidation]: images/moreValidation.png
 [usersList]: images/adminUsers.png
 [filterUsers]: images/filterUsers.png
 [adminServices]: images/adminServices.png
